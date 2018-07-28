@@ -1,4 +1,4 @@
-//      
+//
 
 import { GraphQLObjectType } from 'graphql';
 
@@ -9,7 +9,7 @@ import ChangePassword from '../mutation/ChangePasswordMutation';
 export default new GraphQLObjectType({
   name: 'Mutation',
   fields: () => ({
-		// auth
+    // auth
     LoginEmail,
     RegisterEmail,
     ChangePassword,

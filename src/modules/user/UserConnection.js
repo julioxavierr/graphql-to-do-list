@@ -1,4 +1,4 @@
-//      
+//
 
 import { GraphQLInt } from 'graphql';
 

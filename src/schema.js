@@ -1,4 +1,4 @@
-//      
+//
 
 import { GraphQLSchema } from 'graphql';
 

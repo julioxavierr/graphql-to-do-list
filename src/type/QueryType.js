@@ -1,4 +1,4 @@
-//      
+//
 
 import { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID } from 'graphql';
 import { connectionArgs, fromGlobalId } from 'graphql-relay';

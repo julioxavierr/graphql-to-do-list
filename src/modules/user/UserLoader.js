@@ -1,28 +1,10 @@
-//      
+//
 import DataLoader from 'dataloader';
 import { User as UserModel } from '../../model/index';
 import { connectionFromMongoCursor, mongooseLoader } from '@entria/graphql-mongoose-loader';
 
-                                                         
-                                                           
-
-                 
-             
-              
-               
-                   
-                
-                  
-  
-
 export default class User {
-             
-              
-               
-                
-                  
-
-  constructor(data          , { user }                ) {
+  constructor(data, { user }) {
     this.id = data.id;
     this._id = data._id;
     this.name = data.name;
@@ -42,7 +24,7 @@ const viewerCanSee = (context, data) => {
   return true;
 };
 
-export const load = async (context                , id        )                 => {
+export const load = async (context, id) => {
   if (!id) {
     return null;
   }
@@ -56,11 +38,11 @@ export const load = async (context                , id        )                 
   return viewerCanSee(context, data) ? new User(data, context) : null;
 };
 
-export const clearCache = ({ dataloaders }                , id        ) => {
+export const clearCache = ({ dataloaders }, id) => {
   return dataloaders.UserLoader.clear(id.toString());
 };
 
-export const loadUsers = async (context                , args                     ) => {
+export const loadUsers = async (context, args) => {
   const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') } } : {};
   const users = UserModel.find(where, { _id: 1 }).sort({ createdAt: -1 });
 

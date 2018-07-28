@@ -1,10 +1,9 @@
-//      
+//
 import { fromGlobalId, nodeDefinitions } from 'graphql-relay';
-                                                 
 
 const registeredTypes = {};
 
-export function registerType(type                   ) {
+export function registerType(type) {
   registeredTypes[type.name] = type;
   return type;
 }
