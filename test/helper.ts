@@ -1,5 +1,3 @@
-// @flow
-
 import mongoose from 'mongoose';
 
 import * as loaders from '../src/loader';
@@ -9,30 +7,30 @@ export const createRows = _createRows;
 
 const { ObjectId } = mongoose.Types;
 
+// ensure the NODE_ENV is set to 'test'
+// this is helpful when you would like to change behavior when testing
+// jest does this automatically for you if no NODE_ENV is set
+process.env.NODE_ENV = 'test';
+
 const mongooseOptions = {
   autoIndex: false,
-  autoReconnect: true,
-  reconnectTries: Number.MAX_VALUE,
-  reconnectInterval: 1000,
+  autoReconnect: false,
   connectTimeoutMS: 10000,
+  useNewUrlParser: true,
 };
-
-mongoose.Promise = Promise;
 
 // Just in case want to debug something
 // mongoose.set('debug', true);
 
-// ensure the NODE_ENV is set to 'test'
-// this is helpful when you would like to change behavior when testing
-// jest does this automatically for you if no NODE_ENV is set
-
 export async function connectMongoose() {
-  // // $FlowExpectedError setTimeout is not defined on JestObject
-  // jest.setTimeout(20000);
-  return mongoose.connect(global.__MONGO_URI__, {
-    ...mongooseOptions,
-    dbName: global.__MONGO_DB_NAME__,
-  });
+  jest.setTimeout(20000);
+  return mongoose.connect(
+    global.__MONGO_URI__,
+    {
+      ...mongooseOptions,
+      dbName: global.__MONGO_DB_NAME__,
+    },
+  );
 }
 
 export async function clearDatabase() {
@@ -40,8 +38,24 @@ export async function clearDatabase() {
 }
 
 export async function disconnectMongoose() {
-  // await mongoose.connection.close();
-  return mongoose.disconnect();
+  await mongoose.disconnect();
+  mongoose.connections.forEach(connection => {
+    const modelNames = Object.keys(connection.models);
+
+    modelNames.forEach(modelName => {
+      delete connection.models[modelName];
+    });
+
+    const collectionNames = Object.keys(connection.collections);
+    collectionNames.forEach(collectionName => {
+      delete connection.collections[collectionName];
+    });
+  });
+
+  const modelSchemaNames = Object.keys(mongoose.modelSchemas);
+  modelSchemaNames.forEach(modelSchemaName => {
+    delete mongoose.modelSchemas[modelSchemaName];
+  });
 }
 
 export async function clearDbAndRestartCounters() {
@@ -49,7 +63,7 @@ export async function clearDbAndRestartCounters() {
   createRows.restartCounters();
 }
 
-export function getContext(context: Object) {
+export function getContext(context: any) {
   const dataloaders = Object.keys(loaders).reduce(
     (prev, loaderKey) => ({
       ...prev,
@@ -66,7 +80,7 @@ export function getContext(context: Object) {
 }
 
 // @TODO Make those two functions a separated npm package.
-function sanitizeValue(value: Object, field: ?string, keysToFreeze: string[]) {
+function sanitizeValue(value: any, field: string | undefined, keysToFreeze: string[]) {
   // If this current field is specified on the `keysToFreeze` array, we simply redefine it
   // so it stays the same on the snapshot
   if (field && keysToFreeze.indexOf(field) !== -1) {
@@ -112,8 +126,8 @@ function sanitizeValue(value: Object, field: ?string, keysToFreeze: string[]) {
  * Sanitize a test object removing the mentions of a `ObjectId` from Mongoose and also
  *  stringifying any other object into a valid, "snapshotable", representation.
  */
-export function sanitizeTestObject(payload: Object, keysToFreeze: string[] = ['id'], ignore: string[] = ['password']) {
-  return Object.keys(payload).reduce((sanitizedObj: Object, field: string) => {
+export function sanitizeTestObject(payload: any, keysToFreeze: string[] = ['id'], ignore: string[] = ['password']) {
+  return Object.keys(payload).reduce((sanitizedObj: any, field: string) => {
     if (ignore.indexOf(field) !== -1) {
       return sanitizedObj;
     }

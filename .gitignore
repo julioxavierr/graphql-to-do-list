@@ -31,3 +31,5 @@ coverage
 flow-coverage
 
 .reify-cache/
+
+test-results/
