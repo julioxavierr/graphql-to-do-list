@@ -19,7 +19,7 @@ module.exports = {
   ],
   overrides: [
     {
-      test: ['./src/**/*.ts'],
+      test: ['./src/**/*.ts', './test/*.ts'],
       presets: [
         '@babel/preset-typescript',
         [
