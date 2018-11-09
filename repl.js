@@ -1,11 +1,12 @@
-import 'esm';
+import 'reify/repl';
+import '@babel/polyfill';
 import 'isomorphic-fetch';
-import 'babel-polyfill';
 import REPL from 'repl';
+
 import replPromised from 'repl-promised';
 import history from 'repl.history';
-// import babel from 'babel-core';
-const babel = require('babel-core');
+
+import * as babel from 'babel-core';
 
 import { connectDatabase } from './src/database';
 import * as M from './src/model';
@@ -33,20 +34,30 @@ function preprocess(input) {
 }
 
 function myEval(cmd, context, filename, callback) {
-  const code = babel.transform(preprocess(cmd), {
+  const code = babel.transformSync(preprocess(cmd), {
     presets: [
-      'flow',
+      '@babel/preset-flow',
       [
-        'env',
+        '@babel/preset-env',
         {
           targets: {
             node: 'current',
           },
         },
       ],
+      '@babel/preset-react',
     ],
-    plugins: [['babel-plugin-transform-flow-strip-types']],
+    plugins: [
+      '@babel/plugin-proposal-object-rest-spread',
+      '@babel/plugin-proposal-class-properties',
+      '@babel/plugin-proposal-export-default-from',
+      '@babel/plugin-proposal-export-namespace-from',
+      '@babel/plugin-transform-async-to-generator',
+      '@babel/plugin-syntax-async-generators',
+    ],
+    filename: './babel.config.js', // hacky to make typescript work
   }).code;
+
   _eval(code, context, filename, callback);
 }
 

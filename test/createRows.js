@@ -1,4 +1,3 @@
-// @flow
 /* eslint-disable no-multi-assign,prefer-const */
 
 import { User } from '../src/model';
