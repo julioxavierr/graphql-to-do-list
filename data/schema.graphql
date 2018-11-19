@@ -60,6 +60,9 @@ type TaskConnection {
 
   """A list of edges."""
   edges: [TaskEdge]
+
+  """Number of items in this connection"""
+  count: Int!
 }
 
 """An edge in a connection."""

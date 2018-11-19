@@ -1,4 +1,11 @@
-import { GraphQLObjectType, GraphQLString, GraphQLBoolean, GraphQLNonNull, GraphQLObjectTypeConfig } from 'graphql';
+import {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLBoolean,
+  GraphQLNonNull,
+  GraphQLInt,
+  GraphQLObjectTypeConfig,
+} from 'graphql';
 import { globalIdField, connectionDefinitions } from 'graphql-relay';
 import { GraphQLContext } from '../../TypeDefinition';
 import { NodeInterface } from '../../interface/NodeInterface';
@@ -40,6 +47,12 @@ const TaskType = new GraphQLObjectType(TaskTypeConfig);
 export const TaskConnection = connectionDefinitions({
   name: 'Task',
   nodeType: TaskType,
+  connectionFields: {
+    count: {
+      type: new GraphQLNonNull(GraphQLInt),
+      description: 'Number of items in this connection',
+    },
+  },
 });
 
 export default TaskType;
