@@ -1,33 +1,33 @@
-import { fromGlobalId, nodeDefinitions } from 'graphql-relay';
-
-import { GraphQLObjectType } from 'graphql';
-
-import * as loaders from '../loader';
+import { fromGlobalId } from 'graphql-relay';
+import { Types } from 'mongoose';
 import { GraphQLContext } from '../TypeDefinition';
 
-type RegisteredTypes = {
-  [key: string]: GraphQLObjectType;
-};
-const registeredTypes: RegisteredTypes = {};
+import Task, * as TaskLoader from '../modules/task/TaskLoader';
+import TaskType from '../modules/task/TaskType';
 
-export function registerType(type: GraphQLObjectType) {
-  registeredTypes[type.name] = type;
-  return type;
-}
+import { nodeDefinitions } from './node';
 
-type Loader = {
-  load: (context: GraphQLContext, id: string) => Promise<any>;
-};
-type Loaders = {
-  [key: string]: Loader;
-};
-export const { nodeField, nodeInterface } = nodeDefinitions(
-  (globalId, context: GraphQLContext) => {
-    const { type, id } = fromGlobalId(globalId);
-    // TODO - convert loaders to Loaders
-    const loader = loaders[`${type}Loader`];
+const { nodeField, nodesField, nodeInterface } = nodeDefinitions(
+  // Maps from a global id to an object
+  async (globalId: Types.ObjectId, context: GraphQLContext) => {
+    const { id, type } = fromGlobalId(globalId.toString());
 
-    return (loader && loader.load(context, id)) || null;
+    if (type === 'Task') {
+      return TaskLoader.load(context, id);
+    }
+
+    return null;
   },
-  object => registeredTypes[object.constructor.name] || null,
+  // Maps from an object to a type
+  (obj) => {
+    if (obj instanceof Task) {
+      return TaskType;
+    }
+
+    return null;
+  },
 );
+
+export const NodeInterface = nodeInterface;
+export const NodeField = nodeField;
+export const NodesField = nodesField;
