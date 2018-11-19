@@ -1,6 +1,6 @@
 # GraphQL To Do List
 
-Simple To Do List using [GraphQL DataLoader Boilerplate](https://github.com/entria/graphql-dataloader-boilerplate-ts)
+Simple To Do List built on top of [GraphQL DataLoader Boilerplate](https://github.com/entria/graphql-dataloader-boilerplate-ts)
 
 #### Setup
 ```bash

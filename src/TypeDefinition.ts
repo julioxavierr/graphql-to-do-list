@@ -1,15 +1,13 @@
 import Dataloader from 'dataloader';
 
-import { IUser } from './modules/user/UserModel';
-import User from './modules/user/UserLoader';
+import { ITask } from './modules/task/TaskModel';
 
 type Key = string;
 
 export type Dataloaders = {
-  UserLoader: Dataloader<Key, IUser>;
+  TaskLoader: Dataloader<Key, ITask>;
 };
 
 export type GraphQLContext = {
-  user?: User;
   dataloaders: Dataloaders;
 };

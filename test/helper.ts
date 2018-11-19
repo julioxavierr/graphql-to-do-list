@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
+import { restartCounters } from './createRows';
 import * as loaders from '../src/loader';
-import * as _createRows from './createRows';
 
-export const createRows = _createRows;
+export * from './createRows';
 
 const { ObjectId } = mongoose.Types;
 
@@ -39,28 +39,28 @@ export async function clearDatabase() {
 
 export async function disconnectMongoose() {
   await mongoose.disconnect();
-  mongoose.connections.forEach(connection => {
+  mongoose.connections.forEach((connection) => {
     const modelNames = Object.keys(connection.models);
 
-    modelNames.forEach(modelName => {
+    modelNames.forEach((modelName) => {
       delete connection.models[modelName];
     });
 
     const collectionNames = Object.keys(connection.collections);
-    collectionNames.forEach(collectionName => {
+    collectionNames.forEach((collectionName) => {
       delete connection.collections[collectionName];
     });
   });
 
   const modelSchemaNames = Object.keys(mongoose.modelSchemas);
-  modelSchemaNames.forEach(modelSchemaName => {
+  modelSchemaNames.forEach((modelSchemaName) => {
     delete mongoose.modelSchemas[modelSchemaName];
   });
 }
 
 export async function clearDbAndRestartCounters() {
   await clearDatabase();
-  createRows.restartCounters();
+  restartCounters();
 }
 
 export function getContext(context: any) {
