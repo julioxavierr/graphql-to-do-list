@@ -4093,6 +4093,11 @@ iconv-lite@0.4.24, iconv-lite@^0.4.17, iconv-lite@^0.4.24, iconv-lite@^0.4.4, ic
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
+idx@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/idx/-/idx-2.5.0.tgz#edd81e06e34aeb19fed84bf935716debe722f7b0"
+  integrity sha512-G+vFhPmZ+DbWJ+D/OISEtRW38bqNm4BVbYSrcsXe9OS/unTtnKjChbIxdLN5YnoipCj+1Ft1s7m8jCY2CGdUmA==
+
 ieee754@^1.1.4:
   version "1.1.12"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.12.tgz#50bf24e5b9c8bb98af4964c941cdb0918da7b60b"
