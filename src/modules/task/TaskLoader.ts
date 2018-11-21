@@ -46,8 +46,17 @@ export const load = async (context: GraphQLContext, id: string | null) => {
 
 export const clearCache = ({ dataloaders }: GraphQLContext, id: Types.ObjectId) => dataloaders.TaskLoader.clear(id.toString());
 
-export const loadAll = async (context: GraphQLContext) => {
-  const tasks = TaskModel.find().sort({ createdAt: -1 });
+type LoadAllArgs = {
+  checked?: boolean;
+};
+
+export const loadAll = async (context: GraphQLContext, args: LoadAllArgs) => {
+  const { checked } = args;
+  const conditions = {
+    ...(checked ? { checked } : {}),
+  };
+
+  const tasks = TaskModel.find(conditions).sort({ createdAt: -1 });
 
   return connectionFromMongoCursor({
     cursor: tasks,

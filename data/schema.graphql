@@ -38,7 +38,12 @@ type Query {
     """The IDs of objects"""
     ids: [ID!]!
   ): [Node]!
-  tasks: TaskConnection
+
+  """List all tasks"""
+  tasks(
+    """Wheter the task should be checked or not"""
+    checked: Boolean
+  ): TaskConnection
 }
 
 """Represents a Task on the To Do List"""

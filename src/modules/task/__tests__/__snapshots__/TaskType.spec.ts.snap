@@ -1,5 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`should filter by checked tasks 1`] = `
+Object {
+  "data": Object {
+    "tasks": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "checked": true,
+            "description": "task_10",
+          },
+        },
+        Object {
+          "node": Object {
+            "checked": true,
+            "description": "task_8",
+          },
+        },
+        Object {
+          "node": Object {
+            "checked": true,
+            "description": "task_6",
+          },
+        },
+        Object {
+          "node": Object {
+            "checked": true,
+            "description": "task_4",
+          },
+        },
+        Object {
+          "node": Object {
+            "checked": true,
+            "description": "task_2",
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`should load all tasks 1`] = `
 Object {
   "data": Object {

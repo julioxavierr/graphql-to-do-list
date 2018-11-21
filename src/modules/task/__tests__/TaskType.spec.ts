@@ -68,3 +68,34 @@ it('should load all tasks', async () => {
 
   expect(result).toMatchSnapshot();
 });
+
+it('should filter by checked tasks', async () => {
+  for (let i = 0; i < 10; i++) {
+    const checked = !!(i % 2);
+    await createTask({ checked });
+  }
+
+  // language=GraphQL
+  const query = `
+    query Q($checked: Boolean) {
+      tasks(checked: $checked) {
+        edges {
+          node {
+            description
+            checked
+          }
+        }
+      }
+    }
+  `;
+
+  const rootValue = {};
+  const context = getContext({});
+  const variables = {
+    checked: true,
+  };
+
+  const result = await graphql(schema, query, rootValue, context, variables);
+
+  expect(result).toMatchSnapshot();
+});
