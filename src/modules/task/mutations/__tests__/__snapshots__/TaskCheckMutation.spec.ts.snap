@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should check a task 1`] = `
+Object {
+  "data": Object {
+    "TaskCheck": Object {
+      "error": null,
+      "task": Object {
+        "checked": true,
+        "description": "task_1",
+      },
+    },
+  },
+}
+`;
+
+exports[`should uncheck a task 1`] = `
+Object {
+  "data": Object {
+    "TaskCheck": Object {
+      "error": null,
+      "task": Object {
+        "checked": false,
+        "description": "task_1",
+      },
+    },
+  },
+}
+`;
