@@ -16,17 +16,18 @@ type ConfigType = GraphQLObjectTypeConfig<ITask, GraphQLContext>;
 
 const TaskTypeConfig: ConfigType = {
   name: 'Task',
-  description: 'Represents a Task',
+  description: 'Represents a Task on the To Do List',
   fields: () => ({
     id: globalIdField('Task'),
     description: {
       type: new GraphQLNonNull(GraphQLString),
       description: 'Description of this task',
-      resolve: task => task.description,
+      resolve: ({ description }) => description,
     },
     checked: {
       type: new GraphQLNonNull(GraphQLBoolean),
       description: 'Wheter this task is checked/unchecked',
+      resolve: ({ checked }) => checked,
     },
     createdAt: {
       type: new GraphQLNonNull(GraphQLString),

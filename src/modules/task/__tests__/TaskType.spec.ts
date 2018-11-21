@@ -41,3 +41,30 @@ it('should load Task', async () => {
   expect(node.description).toBe(task.description);
   expect(node.checked).toBe(false);
 });
+
+it('should load all tasks', async () => {
+  for (let i = 0; i < 10; i++) {
+    await createTask();
+  }
+
+  // language=GraphQL
+  const query = `
+    query Q {
+      tasks {
+        edges {
+          node {
+            description
+            checked
+          }
+        }
+      }
+    }
+  `;
+
+  const rootValue = {};
+  const context = getContext({});
+
+  const result = await graphql(schema, query, rootValue, context);
+
+  expect(result).toMatchSnapshot();
+});

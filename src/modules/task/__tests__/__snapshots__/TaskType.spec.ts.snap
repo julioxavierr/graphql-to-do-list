@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should load all tasks 1`] = `
+Object {
+  "data": Object {
+    "tasks": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "checked": false,
+            "description": "task_10",
+          },
+        },
+        Object {
+          "node": Object {
+            "checked": false,
+            "description": "task_9",
+          },
+        },
+        Object {
+          "node": Object {
+            "checked": false,
+            "description": "task_8",
+          },
+        },
+        Object {
+          "node": Object {
+            "checked": false,
+            "description": "task_7",
+          },
+        },
+        Object {
+          "node": Object {
+            "checked": false,
+            "description": "task_6",
+          },
+        },
+        Object {
+          "node": Object {
+            "checked": false,
+            "description": "task_5",
+          },
+        },
+        Object {
+          "node": Object {
+            "checked": false,
+            "description": "task_4",
+          },
+        },
+        Object {
+          "node": Object {
+            "checked": false,
+            "description": "task_3",
+          },
+        },
+        Object {
+          "node": Object {
+            "checked": false,
+            "description": "task_2",
+          },
+        },
+        Object {
+          "node": Object {
+            "checked": false,
+            "description": "task_1",
+          },
+        },
+      ],
+    },
+  },
+}
+`;
