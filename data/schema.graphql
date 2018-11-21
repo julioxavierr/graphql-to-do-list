@@ -1,3 +1,9 @@
+type Mutation {
+  TaskAdd(input: TaskAddInput!): TaskAddPayload
+  TaskCheck(input: TaskCheckInput!): TaskCheckPayload
+  TaskDelete(input: TaskDeleteInput!): TaskDeletePayload
+}
+
 """An object with an ID"""
 interface Node {
   """The id of the object."""
@@ -35,7 +41,7 @@ type Query {
   tasks: TaskConnection
 }
 
-"""Represents a Task"""
+"""Represents a Task on the To Do List"""
 type Task implements Node {
   """The ID of an object"""
   id: ID!
@@ -53,6 +59,33 @@ type Task implements Node {
   updatedAt: String!
 }
 
+input TaskAddInput {
+  """Description of the task that will be created"""
+  description: String!
+  clientMutationId: String
+}
+
+type TaskAddPayload {
+  taskEdge: TaskEdge
+  error: String
+  clientMutationId: String
+}
+
+input TaskCheckInput {
+  """ID of the task that will be modified"""
+  task: ID!
+
+  """Wheter is to check or uncheck the task"""
+  checked: Boolean!
+  clientMutationId: String
+}
+
+type TaskCheckPayload {
+  task: Task
+  error: String
+  clientMutationId: String
+}
+
 """A connection to a list of items."""
 type TaskConnection {
   """Information to aid in pagination."""
@@ -63,6 +96,18 @@ type TaskConnection {
 
   """Number of items in this connection"""
   count: Int!
+}
+
+input TaskDeleteInput {
+  """ID of the task that will be deleted"""
+  task: ID!
+  clientMutationId: String
+}
+
+type TaskDeletePayload {
+  tasks: TaskConnection
+  error: String
+  clientMutationId: String
 }
 
 """An edge in a connection."""
