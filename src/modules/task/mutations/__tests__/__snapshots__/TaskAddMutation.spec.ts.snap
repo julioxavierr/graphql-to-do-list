@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should create a task unchecked by default 1`] = `
+Object {
+  "data": Object {
+    "TaskAdd": Object {
+      "error": null,
+      "taskEdge": Object {
+        "node": Object {
+          "checked": false,
+          "description": "This is a test task",
+        },
+      },
+    },
+  },
+}
+`;
