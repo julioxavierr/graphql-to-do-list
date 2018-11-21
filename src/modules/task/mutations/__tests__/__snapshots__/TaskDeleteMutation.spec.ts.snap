@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should delete a task 1`] = `
+Object {
+  "data": Object {
+    "TaskDelete": Object {
+      "error": null,
+      "tasks": Object {
+        "edges": Array [
+          Object {
+            "node": Object {
+              "checked": false,
+              "description": "task_2",
+            },
+          },
+          Object {
+            "node": Object {
+              "checked": false,
+              "description": "task_1",
+            },
+          },
+        ],
+      },
+    },
+  },
+}
+`;
